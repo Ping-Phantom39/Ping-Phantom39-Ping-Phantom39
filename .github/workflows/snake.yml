@@ -1,9 +1,11 @@
 name: Generate Snake
-
 on:
   schedule:
-    - cron: "*/1 * * * *"
+    - cron: "0 0 * * *" # Suggested: Run once a day instead of every minute
   workflow_dispatch:
+
+permissions:
+  contents: write # This is the critical line to fix the 403 error
 
 jobs:
   generate:
@@ -16,18 +18,11 @@ jobs:
           outputs: |
             dist/github-contribution-grid-snake.svg
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark
-
-      - name: Setup Git
-        run: |
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-
+      
       - name: Push to output branch
         uses: crazy-max/ghaction-github-pages@v4
         with:
           target_branch: output
           build_dir: dist
-          keep_history: true
-          commit_message: "Update contribution snake"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
