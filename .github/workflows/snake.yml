@@ -1,11 +1,11 @@
 name: Generate Snake
 on:
   schedule:
-    - cron: "0 0 * * *" # Suggested: Run once a day instead of every minute
+    - cron: "0 0 * * *" #Run once a day instead of every minute
   workflow_dispatch:
 
 permissions:
-  contents: write # This is the critical line to fix the 403 error
+  contents:
 
 jobs:
   generate:
